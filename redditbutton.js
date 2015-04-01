@@ -47,10 +47,10 @@ ws.on('message', function(data, flags) {
     }
   }
 
-  console.log('Count: ' + clickcount + ', timestamp: ' + messagetimestamp);
+  console.log('Count: ' + clickcount + ', timestamp: ' + messagetimestamp + ', seconds left: ' + secondsleft);
 
   if (clickcount && messagetimestamp) {
-    connection.query('INSERT into buttonclicks SET ?', {timestamp: messagetimestamp, clicks: clickcount, secondsleft}, function (err, result) {
+    connection.query('INSERT into buttonclicks SET ?', {timestamp: messagetimestamp, clicks: clickcount, secondsleft: secondsleft}, function (err, result) {
       if (err) {
         console.log('Error inserting row into mysql:', err, result);
       }
