@@ -1,5 +1,5 @@
 {
-  "name": "Reddit Button",
+  "name": "reddit-button",
   "version": "0.0.1",
   "description": "A module that consumes the Reddit button (reddit.com/r/redditbutton) and writes the number of clicks received so far to a database",
   "author": "Alex Spurling",
