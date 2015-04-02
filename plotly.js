@@ -13,13 +13,14 @@ connection.connect();
 connection.query('SELECT timestamp, clicks from buttonclicks', function(err, rows, fields) {
   if (err) throw err;
 
+  var interval = Math.floor(rows.length / 1000);
   var timestamps = [];
   var clickcount = [];
   var clicksdelta = [];
   var lastclicks = rows[0].clicks - 400;
   var lasttime = new Date(rows[0].timestamp) - 60000;
 
-  for (var i = 0; i < rows.length; i += 40) {
+  for (var i = 0; i < rows.length; i += interval) {
     timestamps.push(rows[i].timestamp);
     clickcount.push(rows[i].clicks);
 
@@ -46,6 +47,12 @@ connection.query('SELECT timestamp, clicks from buttonclicks', function(err, row
 
   console.log("Plotting " + timestamps.length + " points...");
   plotly.plot(data, graphOptions, function (err, msg) {
-    console.log("Plotted", err, msg);
+    if (err) {
+      console.log("Error plotting", err, msg);
+      process.exit(1);
+    } else {
+      console.log("Plotted successfully");
+      process.exit();
+    }
   });
 });
