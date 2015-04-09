@@ -33,7 +33,7 @@ connection.query('SELECT timestamp, clicks from buttonclicks', function(err, row
     lasttime = thisTime;
 
     var intervalminseconds = 60;
-    for (var j = i; j < i+interval; j++) {
+    for (var j = i; j < i+interval && j < rows.length; j++) {
       if (rows[j].secondsleft < intervalminseconds) {
         intervalminseconds = rows[j].secondsleft;
       }
