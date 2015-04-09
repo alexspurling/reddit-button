@@ -50,7 +50,7 @@ connection.query('SELECT timestamp, clicks from buttonclicks', function(err, row
   var layout = {
     title: 'Reddit button clicks over time',
     yaxis: {title: "Total clicks"},
-    yaxis2: {title: "Clicks per minute", overlaying: "y", side: "right"}
+    yaxis2: {title: "Clicks per minute", overlaying: "y", side: "right"},
     yaxis3: {title: "Seconds left reached", overlaying: "y", side: "right"}
   };
 
