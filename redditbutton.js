@@ -1,9 +1,7 @@
 var WebSocket = require('ws');
 var mysql = require('mysql');
 
-
-
-var ws = new WebSocket('wss://wss.redditmedia.com/thebutton?h=fc6fa572272deb2242404d5a3c709e88d336a605&e=1427997941');
+var ws = new WebSocket('wss://wss.redditmedia.com/thebutton?h=ba3ba5328bbf8adf0ad600c7bc65cfa9d9f5413c&e=1428584441');
 
 ws.on('open', function open() {
   console.log("Opened websocket");
@@ -56,4 +54,8 @@ ws.on('message', function(data, flags) {
       }
     });
   }
+});
+
+ws.on('error', function(err) {
+  console.log('WS error', err);
 });
