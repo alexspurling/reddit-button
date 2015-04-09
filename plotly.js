@@ -10,7 +10,7 @@ var connection = new mysql.createConnection({
 
 connection.connect();
 
-connection.query('SELECT timestamp, clicks from buttonclicks', function(err, rows, fields) {
+connection.query('SELECT timestamp, clicks, secondsleft from buttonclicks', function(err, rows, fields) {
   if (err) throw err;
 
   var interval = Math.floor(rows.length / 1000);
@@ -51,7 +51,7 @@ connection.query('SELECT timestamp, clicks from buttonclicks', function(err, row
     title: 'Reddit button clicks over time',
     yaxis: {title: "Total clicks"},
     yaxis2: {title: "Clicks per minute", overlaying: "y", side: "right"},
-    yaxis3: {title: "Seconds left reached", overlaying: "y", side: "right"}
+    yaxis3: {title: "Seconds left reached", overlaying: "y", side: "right", anchor: "free", position: 0.85}
   };
 
   var graphOptions = {layout: layout, filename: "reddit-button-clicks", fileopt: "overwrite"};
