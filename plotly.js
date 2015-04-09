@@ -17,6 +17,7 @@ connection.query('SELECT timestamp, clicks from buttonclicks', function(err, row
   var timestamps = [];
   var clickcount = [];
   var clicksdelta = [];
+  var minseconds = [];
   var lastclicks = rows[0].clicks - 400;
   var lasttime = new Date(rows[0].timestamp) - 60000;
 
@@ -30,17 +31,27 @@ connection.query('SELECT timestamp, clicks from buttonclicks', function(err, row
     clicksdelta.push(delta);
     lastclicks = rows[i].clicks;
     lasttime = thisTime;
+
+    var intervalminseconds = 60;
+    for (var j = i; j < i+interval; j++) {
+      if (rows[j].secondsleft < intervalminseconds) {
+        intervalminseconds = rows[j].secondsleft;
+      }
+    }
+    minseconds.push(intervalminseconds);
   }
 
   var clicks = {x:timestamps, y:clickcount, type:"scatter", name: "Clicks"};
-  var clicksdelta = {x:timestamps, y:clicksdelta, type:"scatter", yaxis:'y2', name: "Clicks Delta"};
+  var clicksdelta = {x:timestamps, y:clicksdelta, type:"scatter", yaxis:'y2', name: "Clicks delta"};
+  var seconds = {x:timestamps, y:minseconds, type:"scatter", yaxis:'y3', name: "Seconds left"};
 
-  var data = [clicks, clicksdelta];
+  var data = [clicks, clicksdelta, seconds];
 
   var layout = {
     title: 'Reddit button clicks over time',
     yaxis: {title: "Total clicks"},
     yaxis2: {title: "Clicks per minute", overlaying: "y", side: "right"}
+    yaxis3: {title: "Seconds left reached", overlaying: "y", side: "right"}
   };
 
   var graphOptions = {layout: layout, filename: "reddit-button-clicks", fileopt: "overwrite"};
